@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Title</title>
+
+</head>
+
+<body>
+<table>
+	<tr>
+		<th>Animal</th>
+		<th>Color</th>
+	</tr>
+	<tr>
+		<td>Zebra</td>
+		<td>Black and white</td>
+	</tr>
+	<tr>
+		<td>Tiger</td>
+		<td>Black and orange</td>
+	</tr>
+	<tr>
+		<td>Clownfish</td>
+		<td>Orange and white</td>
+	</tr>
+</table>
+</body>
+<script>
+	var header = document.getElementsByTagName("TH");
+	for (var i = 0; i < header.length; i++) {
+		header[i].style.color = "purple";
+	}
+	var rows = document.getElementsByTagName("TR");
+	for (var j = 1; j < rows.length; j++) {
+		if (j % 2 == 0){
+			rows[j].style.color = "blue";
+		} else {
+			rows[j].style.color = "green";
+		}
+	}
+</script>
+</html>

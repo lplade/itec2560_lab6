@@ -1,0 +1,3 @@
+[submodule "week5-jquery-examples"]
+	path = week5-jquery-examples
+	url = git@github.com:minneapolis-edu/week5-jquery-examples.git
