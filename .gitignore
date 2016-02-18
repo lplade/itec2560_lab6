@@ -4,3 +4,6 @@
 
 # Ignore Unix temp files
 *~
+
+#Ignore my dropbox archives
+lab6-essential.zip
