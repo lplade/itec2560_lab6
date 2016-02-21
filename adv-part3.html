@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Lab 6, advanced 2</title>
+	<!-- jQuery library -->
+	<script src="//code.jquery.com/jquery-1.12.0.min.js"></script>
+</head>
+<style>
+	body {
+		font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+		font-size: 16pt;
+	}
+
+	label {
+		font-style: oblique;
+	}
+
+	ul {
+		list-style-type: none;
+		padding-left: 0;
+		margin-left: 0;
+	}
+
+	#mainToDoList {
+		float: left;
+		width: 40%;
+		margin: 0 0 0.5in 0.5in;
+	}
+
+	#history {
+		float: right;
+		width: 40%;
+		margin: 0 0 0.5in 0.5in;
+		padding: 0 0 0.5in 0.5in;
+		background-color: gray;
+	}
+
+	li:hover {
+		text-shadow: 0 0 6px yellow;
+	}
+
+	li.checklist:before {
+		content: "☐";
+		padding-left: 10px;
+		padding-right: 5px;
+	}
+
+	/*Default li is unchecked.*/
+	li.checked:before {
+		content: "☑";
+		padding-left: 10px;
+		padding-right: 5px;
+	}
+
+	tr {
+		background-color: lightgray;
+	}
+</style>
+<body>
+
+<div id="mainToDoList">
+	<h1>To Do list</h1>
+	<ul id="toDoList">
+		<li class="checklist">bread</li>
+		<li class="checklist">milk</li>
+		<li class="checklist">cheese</li>
+		<!--empty DOM container-->
+	</ul>
+	<form>
+		<label for="newItem">Enter a new item</label><br/>
+		<button type="button" id="newItemSubmit" onclick="addItem()">Add
+		</button>
+		<input type="text" id="newItem" name="newItem" size="70"><br/>
+		<button type="button" id="purgeCompleted">Remove completed items
+		</button>
+	</form>
+</div>
+
+<div id="history">
+	<h1>Archive</h1>
+	<table id="doneList">
+		<tr>
+			<th width="50%">Item</th>
+			<th width="50%">Date</th>
+		</tr>
+		<!-- dynamically added items will go here -->
+	</table>
+</div>
+</body>
+<script>
+	function addItem() {
+		var newItemText = $("#newItem").val();
+		$("#toDoList").append("<li class='checklist'>" + newItemText + "</li>");
+	}
+	/*	This won't work with dynamically created nodes
+	 function purgeCompleted() {
+	 $(".completed").remove();
+	 }*/
+	function getTodaysDate() {
+		//inspired by http://stackoverflow.com/questions/27480262/get-current-date-in-dd-mon-yyy-format-in-javascript-jquery
+		var d = new Date();
+		var curr_day = d.getDate();
+		var curr_month = d.getMonth();
+		var curr_year = d.getFullYear();
+		return (curr_year + "-" + curr_month + "-" + curr_day);
+	}
+
+	// Need to use "delegated event" to get event listener on dynamically added element
+	// http://api.jquery.com/on/
+	/*	$("li").click(function(){
+	 console.log("click");
+	 $(this).toggleClass("checked");
+	 });*/
+	// So we attach the event handle to the parent element instead
+	$("ul").on("click", "li", function () {
+		$(this).toggleClass("checked");
+	});
+
+
+	// Likewise, the script for removing the dynamically added items can't fire with the normal button event.
+	// Create the event in jQuery
+	$("document").ready(function () {
+		$("#purgeCompleted").click(function () {
+			var todayDate = getTodaysDate();
+			var checkedItemList = $(".checked");
+			// jQuery docs say this method is less error-prone that a for/.length loop
+			// https://api.jquery.com/each/
+			checkedItemList.each(function () {
+				var checkedItem = $(this).html();
+				$("#doneList").append(
+					"<tr><td>" + checkedItem + "</td><td>" + todayDate + "</td></tr>"
+				);
+			});
+			checkedItemList.remove();
+
+		});
+	});
+</script>
+</html>
