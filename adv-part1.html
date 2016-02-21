@@ -24,12 +24,17 @@
 		margin-left: 0;
 	}
 
-	li.unchecked:before {
+	li:hover {
+		text-shadow: 0 0 6px yellow;
+	}
+
+	li.checklist:before {
 		content: "☐";
 		padding-left: 10px;
 		padding-right: 5px;
 	}
 
+/*Default li is unchecked.*/
 	li.checked:before {
 		content: "☑";
 		padding-left: 10px;
@@ -45,16 +50,36 @@
 <form>
 	<label for="newItem">Enter a new item</label><br/>
 	<input type="text" id="newItem" name="newItem" size="80"><br/>
-	<button type="button" id="newItemSubmit" onclick="addItem()">Add</button>
+	<button type="button" id="newItemSubmit" onclick="addItem()">Add</button><br/>
+	<button type="button" id="purgeCompleted" onclick="purgeCompleted()">Remove completed items</button>
 </form>
 
 </body>
 <script>
 	function addItem() {
-		console.log("button triggered");
 		var newItemText = $("#newItem").val();
-		console.log(newItemText);
-		$("#todolist").append("<li class=\"unchecked\">" + newItemText + "</li>");
+		// Is concatenating an escaped string of HTML really the best way to do this?
+		$("#todolist").append("<li class='checklist'>" + newItemText + "</li>");
 	}
+/*	function purgeCompleted() {
+		$(".completed").remove();
+	}*/
+	// Need to use "delgated event" to get event listener on dynamically added element
+	// http://api.jquery.com/on/
+/*	$("li").click(function(){
+		console.log("click");
+		$(this).toggleClass("checked");
+	});*/
+	// So we attach the event handle to the parent element instead
+	var ul = $("ul"); //suggested by webstorm for performance
+	ul.on("click", "li", function(){
+		$(this).toggleClass("checked");
+	});
+	// Likewise, the script for remove the dynamically added items can't fire with the normal button event.
+	ul.on("click", "#purgeCompleted", function(){
+		console.log("toast");
+		$(".completed").remove();
+	});
 </script>
+<!--Add a button to remove the items you have done. When you click the button, all of the items that are done will be removed.-->
 </html>
