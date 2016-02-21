@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Lab 6, advanced 1</title>
+	<!-- jQuery library -->
+	<script src="//code.jquery.com/jquery-1.12.0.min.js"></script>
+</head>
+<style>
+	/* U+2610 = empty box
+	    U+2611 = checked box */
+	body {
+		font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+		font-size: 16pt;
+	}
+
+	label {
+		font-style: oblique;
+	}
+
+	ul {
+		list-style-type: none;
+		padding-left: 0;
+		margin-left: 0;
+	}
+
+	li.unchecked:before {
+		content: "☐";
+		padding-left: 10px;
+		padding-right: 5px;
+	}
+
+	li.checked:before {
+		content: "☑";
+		padding-left: 10px;
+		padding-right: 5px;
+	}
+</style>
+<body>
+
+<h1>To Do list</h1>
+<ul id="todolist">
+	<!--empty DOM container-->
+</ul>
+<form>
+	<label for="newItem">Enter a new item</label><br/>
+	<input type="text" id="newItem" name="newItem" size="80"><br/>
+	<button type="button" id="newItemSubmit" onclick="addItem()">Add</button>
+</form>
+
+</body>
+<script>
+	function addItem() {
+		console.log("button triggered");
+		var newItemText = $("#newItem").val();
+		console.log(newItemText);
+		$("#todolist").append("<li class=\"unchecked\">" + newItemText + "</li>");
+	}
+</script>
+</html>
