@@ -68,11 +68,15 @@
 		<!--empty DOM container-->
 	</ul>
 	<form>
-		<label for="newItem">Enter a new item</label><br/>
-		<button type="button" id="newItemSubmit" onclick="addItem()">Add
+		<label for="newItem">
+			Enter a new item
+		</label><br/>
+		<button type="button" id="newItemSubmit" onclick="addItem()">
+			Add
 		</button>
 		<input type="text" id="newItem" name="newItem" size="70"><br/>
-		<button type="button" id="purgeCompleted">Remove completed items
+		<button type="button" id="purgeCompleted">
+			Archive completed items
 		</button>
 	</form>
 </div>
@@ -91,7 +95,7 @@
 <script>
 	function addItem() {
 		var newItemText = $("#newItem").val();
-		$("#toDoList").append("<li class='checklist'>" + newItemText + "</li>");
+		$("#toDoList").append("<li class='checklist'>" + newItemText + "</li>").children(':last').hide().fadeIn(); // can apply a whole slew of methods, neat
 	}
 	/*	This won't work with dynamically created nodes
 	 function purgeCompleted() {
@@ -127,13 +131,16 @@
 			// jQuery docs say this method is less error-prone that a for/.length loop
 			// https://api.jquery.com/each/
 			checkedItemList.each(function () {
-				var checkedItem = $(this).html();
+				var checkedItemText = $(this).html();
 				$("#doneList").append(
-					"<tr><td>" + checkedItem + "</td><td>" + todayDate + "</td></tr>"
-				);
+					"<tr><td>" + checkedItemText + "</td><td>" + todayDate + "</td></tr>"
+				).hide().fadeIn();
+				$(this).fadeOut(400, function(){ //Need to use .remove as a param of the .fadeOut method, otherwise it removes the element before the animation finishes
+					$(this).remove();
+				});
 			});
-			checkedItemList.remove();
 
+			//checkedItemList.remove();
 		});
 	});
 </script>
