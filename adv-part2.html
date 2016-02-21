@@ -24,7 +24,7 @@
 
 	#mainToDoList {
 		float: left;
-		width: 50%;
+		width: 40%;
 		margin: 0 0 0.5in 0.5in;
 	}
 	#history {
@@ -51,6 +51,9 @@
 		padding-left: 10px;
 		padding-right: 5px;
 	}
+	tr {
+		background-color: lightgray;
+	}
 </style>
 <body>
 
@@ -66,7 +69,7 @@
 		<label for="newItem">Enter a new item</label><br/>
 		<button type="button" id="newItemSubmit" onclick="addItem()">Add
 		</button>
-		<input type="text" id="newItem" name="newItem" size="80"><br/>
+		<input type="text" id="newItem" name="newItem" size="70"><br/>
 		<button type="button" id="purgeCompleted">Remove completed items
 		</button>
 	</form>
@@ -76,8 +79,8 @@
 	<h1>Archive</h1>
 	<table id="doneList">
 		<tr>
-			<th>Item</th>
-			<th>Date completed</th>
+			<th width="50%">Item</th>
+			<th width="50%">Date</th>
 		</tr>
 		<!-- dynamically added items will go here -->
 	</table>
@@ -122,7 +125,7 @@
 			var checkedItemList = $(".checked");
 			// jQuery docs say this method is less error-prone that a for/.length loop
 			// https://api.jquery.com/each/
-			checkedItemList.each(function(i){
+			checkedItemList.each(function(){
 				var checkedItem = $(this).html();
 				$("#doneList").append(
 					"<tr><td>" + checkedItem + "</td><td>" + todayDate + "</td></tr>"
