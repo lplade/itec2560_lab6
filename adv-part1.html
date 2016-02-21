@@ -49,9 +49,9 @@
 </ul>
 <form>
 	<label for="newItem">Enter a new item</label><br/>
+	<button type="button" id="newItemSubmit" onclick="addItem()">Add</button>
 	<input type="text" id="newItem" name="newItem" size="80"><br/>
-	<button type="button" id="newItemSubmit" onclick="addItem()">Add</button><br/>
-	<button type="button" id="purgeCompleted" onclick="purgeCompleted()">Remove completed items</button>
+	<button type="button" id="purgeCompleted">Remove completed items</button>
 </form>
 
 </body>
@@ -61,25 +61,30 @@
 		// Is concatenating an escaped string of HTML really the best way to do this?
 		$("#todolist").append("<li class='checklist'>" + newItemText + "</li>");
 	}
-/*	function purgeCompleted() {
+/*	This won't work with dynamically created nodes
+	function purgeCompleted() {
 		$(".completed").remove();
 	}*/
-	// Need to use "delgated event" to get event listener on dynamically added element
+
+
+	// Need to use "delegated event" to get event listener on dynamically added element
 	// http://api.jquery.com/on/
 /*	$("li").click(function(){
 		console.log("click");
 		$(this).toggleClass("checked");
 	});*/
 	// So we attach the event handle to the parent element instead
-	var ul = $("ul"); //suggested by webstorm for performance
-	ul.on("click", "li", function(){
+	$("ul").on("click", "li", function(){
 		$(this).toggleClass("checked");
 	});
+
+
 	// Likewise, the script for remove the dynamically added items can't fire with the normal button event.
-	ul.on("click", "#purgeCompleted", function(){
-		console.log("toast");
-		$(".completed").remove();
+	// Create the event in jQuery
+	$("document").ready(function(){
+		$("#purgeCompleted").click(function(){
+			$(".checked").remove();
+		});
 	});
 </script>
-<!--Add a button to remove the items you have done. When you click the button, all of the items that are done will be removed.-->
 </html>
